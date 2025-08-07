@@ -13,6 +13,7 @@ from . import models, schemas
 from .users import router as user_router
 from .database import get_db
 
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
