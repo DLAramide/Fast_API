@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from .. import models, schemas
 from ..database import get_db
 from .. import utils
-
+from typing import Optional,List
 
 router = APIRouter(
     prefix="/users",
@@ -30,4 +30,12 @@ async def get_user(id: int,db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="user not found")
     return user
+
+
+@router.get("/",response_model= List[schemas.UserOut])
+async def all_user(db: Session = Depends(get_db)):
+    users = db.query(models.User).all()
+    return users
+
+
 
